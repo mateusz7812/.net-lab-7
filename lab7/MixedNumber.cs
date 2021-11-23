@@ -2,23 +2,23 @@ using System;
 
 public class MixedNumber
 {
-    public MixedNumber(bool ujemna, int czesc_calkowita, int licznik, int mianownik)
+    public MixedNumber(bool negative, int integer, int numerator, int denominator)
     {
-        Zn = ujemna;
-        C = czesc_calkowita;
-        M = mianownik;
-        L = licznik;
+        Zn = negative;
+        C = integer;
+        SetFraction(numerator, denominator);
     }
 
-    public MixedNumber(int czesc_calkowita, int licznik, int mianownik) :
-    this(czesc_calkowita < 0, Math.Abs(czesc_calkowita), licznik, mianownik)
+    public MixedNumber(int integer, int numerator, int denominator) :
+    this(integer < 0, Math.Abs(integer), numerator, denominator)
     { }
 
-    public MixedNumber(int licznik, int mianownik) :
-    this((licznik < 0) ^ (mianownik < 0), 0, Math.Abs(licznik), Math.Abs(mianownik))
+    public MixedNumber(int numerator, int denominator) :
+    this((numerator < 0) ^ (denominator < 0), 0, Math.Abs(numerator), Math.Abs(denominator))
     { }
 
-    public void Deconstruct(out bool zn, out int c, out int l, out int m){
+    public void Deconstruct(out bool zn, out int c, out int l, out int m)
+    {
         (zn, c, l, m) = (Zn, C, L, M);
     }
 
@@ -41,22 +41,33 @@ public class MixedNumber
     public int L
     {
         get => _l;
-        set
-        {
-            if (value < 0)
-                value = 0;
-            _l = value;
-            reduceIfPossible();
-            divideIfPossible();
-        }
+        set => SetFraction(value, M);
     }
 
+    public int M
+    {
+        get => _m;
+        set => SetFraction(L, value);
+    }
+
+    public void SetFraction(int numerator, int denominator)
+    {
+        Console.WriteLine($"Setting factorial: {numerator}/{denominator}");
+        if (numerator < 0)
+            numerator = 0;
+        if (denominator <= 0)
+            denominator = 1;
+        _l = numerator;
+        _m = denominator;
+        reduceIfPossible();
+        divideIfPossible();
+    }
     public double ToDouble
     {
         get
         {
-            double d = (double)(L + C * M)/M;
-            if(Zn)
+            double d = (double)(L + C * M) / M;
+            if (Zn)
                 d *= -1;
             return d;
         }
@@ -64,20 +75,7 @@ public class MixedNumber
 
     public override string ToString()
     {
-        return $"{(Zn?"-":"")}{L + C * M}/{M}";
-    }
-
-    public int M
-    {
-        get => _m;
-        set
-        {
-            if (value <= 0)
-                value = 1;
-            _m = value;
-            reduceIfPossible();
-            divideIfPossible();
-        }
+        return $"{(Zn ? "-" : "")}{L + C * M}/{M}";
     }
 
     private static int GCD(int a, int b)
@@ -95,7 +93,7 @@ public class MixedNumber
 
     private void reduceIfPossible()
     {
-        if(L >= M) 
+        if (L >= M)
             repairs++;
         while (L >= M)
         {
@@ -106,7 +104,7 @@ public class MixedNumber
     private void divideIfPossible()
     {
         var v = GCD(L, M);
-        if (L != 0 && M != 0 && v != 1)
+        if (v != 1)
         {
             repairs++;
             _l = L / v;

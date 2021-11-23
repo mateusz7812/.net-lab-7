@@ -137,7 +137,7 @@ namespace Tests
         }
 
         [Fact]
-        public void TestChangeDecominator()
+        public void TestChangeDenominator()
         {
             MixedNumber mixedNumber = new MixedNumber(10, 13);
             Assert.False(mixedNumber.Zn);
@@ -172,7 +172,7 @@ namespace Tests
             Assert.True(result.Zn);
             Assert.Equal(1, result.C);
             Assert.Equal(0, result.L);
-            Assert.Equal(16, result.M);
+            Assert.Equal(1, result.M);
         }
 
         [Fact]
@@ -226,12 +226,22 @@ namespace Tests
         {
             MixedNumber mixedNumber = new MixedNumber(false, 5, 1, 4);
             bool zn;
-            int c, l, m; 
+            int c, l, m;
             mixedNumber.Deconstruct(out zn, out c, out l, out m);
             Assert.False(zn);
             Assert.Equal(5, c);
             Assert.Equal(1, l);
-            Assert.Equal(4, m);        
+            Assert.Equal(4, m);
+        }
+
+        [Fact]
+        public void TestReduceDenominantEvenIfNominantIsZero()
+        {
+            MixedNumber mixedNumber = new MixedNumber(false, 5, 0, 4);
+            Assert.False(mixedNumber.Zn);
+            Assert.Equal(5, mixedNumber.C);
+            Assert.Equal(0, mixedNumber.L);
+            Assert.Equal(1, mixedNumber.M);
         }
     }
 }
