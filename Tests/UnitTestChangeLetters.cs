@@ -19,7 +19,7 @@ namespace Tests
         public void TestMedium()
         {
             string str = "ab2cd3e5";
-            string changed = Program.ChangeLetters(str);
+            string changed = str.ChangeLetters();
             Assert.Equal("aB.Cd.e.", changed);
         }
     }

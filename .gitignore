@@ -1,3 +1,6 @@
 /.vscode
 /build
 lab7/bin
+lab7/obj
+Tests/obj
+Tests/bin

@@ -6,19 +6,22 @@ namespace lab7
     {
         static void Main(string[] args)
         {
+            Console.WriteLine("Zadanie 1:");
             MixedNumber m1 = new MixedNumber(2, 3);
             MixedNumber m2 = new MixedNumber(-1, 3);
-            Console.WriteLine($"{m1} + ({m2}) = ({m1 + m2})");
+            Console.WriteLine($"{m1} + ({m2}) = {m1 + m2}");
+            Console.WriteLine($"Napraw: {MixedNumber.Repairs}");
 
+            Console.WriteLine("\nZadanie 2:");
             object[] objects = new object[] {
                 new Line(),
                 new Ring(),
                 new Square("red"),
                 new Circle("blue")
             };
-
             WriteObjects(objects);
 
+            Console.WriteLine("\nZadanie 3:");
             Console.WriteLine("abcdef123".ChangeLetters());
         }
 

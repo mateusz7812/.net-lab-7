@@ -227,7 +227,7 @@ namespace Tests
             MixedNumber mixedNumber = new MixedNumber(false, 5, 1, 4);
             bool zn;
             int c, l, m;
-            mixedNumber.Deconstruct(out zn, out c, out l, out m);
+            (zn, c, l, m) = mixedNumber;
             Assert.False(zn);
             Assert.Equal(5, c);
             Assert.Equal(1, l);

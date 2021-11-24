@@ -22,7 +22,7 @@ public class MixedNumber
         (zn, c, l, m) = (Zn, C, L, M);
     }
 
-    public static int repairs = 0;
+    public static int Repairs {get; private set;} = 0;
     private int _l = 0;
     private int _m = 0;
     private int _c = 0;
@@ -52,7 +52,7 @@ public class MixedNumber
 
     public void SetFraction(int numerator, int denominator)
     {
-        Console.WriteLine($"Setting factorial: {numerator}/{denominator}");
+        //Console.WriteLine($"Setting factorial: {numerator}/{denominator}");
         if (numerator < 0)
             numerator = 0;
         if (denominator <= 0)
@@ -93,8 +93,10 @@ public class MixedNumber
 
     private void reduceIfPossible()
     {
-        if (L >= M)
-            repairs++;
+        if (L >= M){
+            Repairs++;
+            //Console.WriteLine($"Redukowanie {this}");
+        }
         while (L >= M)
         {
             C += 1;
@@ -106,7 +108,8 @@ public class MixedNumber
         var v = GCD(L, M);
         if (v != 1)
         {
-            repairs++;
+            Repairs++;
+            //Console.WriteLine($"Dzielenie {this}");
             _l = L / v;
             _m = M / v;
         }
